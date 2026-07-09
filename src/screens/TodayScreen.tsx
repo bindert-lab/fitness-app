@@ -26,7 +26,12 @@ export function TodayScreen({ fridge, mode, onModeChange, timing, onTimingChange
     <div className="space-y-5 px-4 pb-28 pt-4">
       <header>
         <p className="text-[13px] font-medium text-ios-secondary">Hey 👋</p>
-        <h1 className="text-[28px] font-bold text-ios-label">Was isst du jetzt?</h1>
+        <h1
+          className="bg-clip-text text-[32px] font-bold leading-tight text-transparent"
+          style={{ backgroundImage: "linear-gradient(135deg, #FFFFFF, #8E8E93)" }}
+        >
+          Was isst du jetzt?
+        </h1>
       </header>
 
       <SegmentedControl options={TIMING_OPTIONS} value={timing} onChange={onTimingChange} />
@@ -48,7 +53,7 @@ export function TodayScreen({ fridge, mode, onModeChange, timing, onTimingChange
           <p className="mb-2 px-1 text-[13px] font-semibold uppercase tracking-wide text-ios-secondary">
             Beste Empfehlung
           </p>
-          <MealCard meal={top} fridge={fridge} />
+          <MealCard meal={top} fridge={fridge} highlight />
         </div>
       ) : (
         <p className="text-center text-ios-secondary">Keine Vorschläge für diese Kombination.</p>

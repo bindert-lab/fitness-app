@@ -1,4 +1,4 @@
-export type Tab = "today" | "nutrition" | "training";
+export type Tab = "today" | "nutrition" | "training" | "supplements";
 
 interface Props {
   active: Tab;
@@ -8,7 +8,8 @@ interface Props {
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: "today", label: "Heute", icon: "✨" },
   { id: "nutrition", label: "Ernährung", icon: "🍽️" },
-  { id: "training", label: "Training", icon: "🏋️" }
+  { id: "training", label: "Training", icon: "🏋️" },
+  { id: "supplements", label: "Supplements", icon: "💊" }
 ];
 
 export function TabBar({ active, onChange }: Props) {

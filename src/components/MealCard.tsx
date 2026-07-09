@@ -1,27 +1,40 @@
 import type { Meal } from "../types";
+import { ingredientLabel } from "../data/ingredients";
 
 interface Props {
   meal: Meal;
   fridge: string[];
+  highlight?: boolean;
 }
 
-export function MealCard({ meal, fridge }: Props) {
+export function MealCard({ meal, fridge, highlight }: Props) {
   const have = meal.ingredients.filter((i) => fridge.includes(i));
   const missing = meal.ingredients.filter((i) => !fridge.includes(i));
   const matchRatio = have.length / meal.ingredients.length;
 
-  return (
-    <div className="rounded-card bg-ios-surface border border-ios-border p-4 shadow-card">
+  const card = (
+    <div
+      className={`rounded-card bg-ios-surface p-4 shadow-card ${
+        highlight ? "border border-transparent" : "border border-ios-border"
+      }`}
+    >
       <div className="flex items-start gap-4">
         <div
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-3xl"
-          style={{ backgroundColor: `${meal.color}26` }}
+          className={`flex shrink-0 items-center justify-center rounded-2xl ${
+            highlight ? "h-20 w-20 text-4xl" : "h-16 w-16 text-3xl"
+          }`}
+          style={{
+            backgroundColor: `${meal.color}26`,
+            boxShadow: highlight ? `0 0 24px ${meal.color}55` : undefined
+          }}
         >
           {meal.emoji}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="text-[17px] font-semibold text-ios-label leading-tight">{meal.name}</h3>
+            <h3 className={`font-semibold text-ios-label leading-tight ${highlight ? "text-[20px]" : "text-[17px]"}`}>
+              {meal.name}
+            </h3>
             {meal.needsShopping ? (
               <span className="shrink-0 rounded-pill bg-ios-orange/15 px-2.5 py-1 text-[11px] font-medium text-ios-orange">
                 🛒 Einkauf nötig
@@ -45,12 +58,12 @@ export function MealCard({ meal, fridge }: Props) {
           <div className="mt-3 flex flex-wrap gap-1.5">
             {have.map((i) => (
               <span key={i} className="rounded-pill bg-ios-green/15 px-2 py-0.5 text-[11px] text-ios-green">
-                {i}
+                {ingredientLabel(i)}
               </span>
             ))}
             {missing.map((i) => (
               <span key={i} className="rounded-pill bg-ios-surface2 px-2 py-0.5 text-[11px] text-ios-secondary">
-                {i}
+                {ingredientLabel(i)}
               </span>
             ))}
           </div>
@@ -65,6 +78,17 @@ export function MealCard({ meal, fridge }: Props) {
           )}
         </div>
       </div>
+    </div>
+  );
+
+  if (!highlight) return card;
+
+  return (
+    <div
+      className="rounded-card p-[1.5px]"
+      style={{ background: `linear-gradient(135deg, ${meal.color}, #0A84FF)` }}
+    >
+      {card}
     </div>
   );
 }

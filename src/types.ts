@@ -16,11 +16,23 @@ export interface Meal {
   rationale: string;
 }
 
-export interface WorkoutSet {
+export interface StrengthEntry {
   id: string;
+  kind: "strength";
   exercise: string;
   sets: number;
   reps: number;
   weight: number;
   date: string;
 }
+
+export interface CardioEntry {
+  id: string;
+  kind: "cardio";
+  activity: string;
+  distanceKm: number;
+  durationMin: number;
+  date: string;
+}
+
+export type WorkoutEntry = StrengthEntry | CardioEntry;
